@@ -10,6 +10,8 @@ import {
 import Landing from "./landing";
 import RecipientHome from './recipient';
 import RecipientSignup from './recipient/signup';
+import MakeAppointment from './recipient/MakeAppointment';
+import ViewRecipientAppointments from './recipient/ViewAppointments';
 import ProviderHome from './provider';
 import ProviderSignup from './provider/signup';
 
@@ -52,6 +54,16 @@ class App extends Component {
                     exact
                     path="/recipient/signup"
                     render={routeProps => <RecipientSignup {...routeProps} />}
+                  />
+                  <Route
+                    exact
+                    path="/recipient/make-appointment"
+                    render={routeProps => <MakeAppointment {...routeProps} />}
+                  />
+                  <Route
+                    exact
+                    path="/recipient/view-appointments"
+                    render={routeProps => <ViewRecipientAppointments {...routeProps} />}
                   />
                   <Route
                     exact
