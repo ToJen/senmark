@@ -172,7 +172,6 @@ class MobileContainer extends Component {
         as={Sidebar.Pushable}
         getWidth={getWidth}
         maxWidth={Responsive.onlyMobile.maxWidth}
-        scrollRef={this.scrollRef}
       >
         <Sidebar
           as={Menu}
