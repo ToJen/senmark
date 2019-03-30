@@ -3,47 +3,71 @@ import faker from "faker";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Search, Grid, Image, List, Rating } from "semantic-ui-react";
+import AppointmentRequestModal from "./AppointmentRequestModal";
 
 const source = _.times(10, () => ({
-  title: faker.name.jobTitle(),
-  name: faker.name.firstName(),
+  title: faker.name.title(),
+  name: `${faker.name.firstName()} ${faker.name.lastName()}`,
   rating: Number(faker.random.number()) % 5,
   avatar: faker.internet.avatar(),
-  price: faker.finance.amount(0, 100, 2, "$")
+  price: faker.finance.amount(0, 100, 2, "$"),
+  distance: Number(faker.random.number()) % 6,
+  services: _.times(Number(faker.random.number({min: 1, max: 12})), () =>
+    faker.commerce.productAdjective()
+  ),
+  gender: faker.name.gender
 }));
 
 const ProvidersList = ({ providers }) => {
+  const [isRequestModalOpen, toggleRequestModal] = useState(false);
+  const [selectedProvider, setSelectedProvider] = useState({});
   return (
-    <List divided relaxed link>
-      {providers.map((provider, i) => {
-        return (
-          <List.Item key={i}>
-            <Image avatar src={provider.avatar} />
-            <List.Content>
-              <List.Header as="a">
-                <>
-                  {provider.name}
-                  <Rating
-                    icon="star"
-                    defaultRating={provider.rating}
-                    maxRating={5}
-                    disabled
-                  />
-                </>
-              </List.Header>
-              <List.Description>
-                <>
-                  {provider.price}/hr
-                  <Link to="/provider/profile">
-                    <Button primary>View</Button>
-                  </Link>
-                </>
-              </List.Description>
-            </List.Content>
-          </List.Item>
-        );
-      })}
-    </List>
+    <>
+      {isRequestModalOpen && (
+        <AppointmentRequestModal
+          toggleModal={() => toggleRequestModal(!isRequestModalOpen)}
+          provider={selectedProvider}
+        />
+      )}
+      <List divided relaxed link>
+        {providers.map((provider, i) => {
+          return (
+            <List.Item key={i}>
+              <Image avatar src={provider.avatar} />
+              <List.Content>
+                <List.Header as="a">
+                  <>
+                    {provider.name}
+                    <Rating
+                      icon="star"
+                      defaultRating={provider.rating}
+                      maxRating={5}
+                      disabled
+                    />
+                    {provider.services.length} {provider.services.length === 1 ? 'skill' : 'skills'}
+                  </>
+                </List.Header>
+                <List.Description>
+                  <>
+                    {provider.price}/hr &nbsp;
+                    {provider.distance}km
+                    <Button
+                      primary
+                      onClick={() => {
+                        toggleRequestModal(!isRequestModalOpen);
+                        setSelectedProvider(provider);
+                      }}
+                    >
+                      View
+                    </Button>
+                  </>
+                </List.Description>
+              </List.Content>
+            </List.Item>
+          );
+        })}
+      </List>
+    </>
   );
 };
 
@@ -84,7 +108,7 @@ const MakeAppointment = ({ props }) => {
           onSearchChange={_.debounce(handleSearchChange, 500, {
             leading: true
           })}
-          //   results={results}
+          noResultsMessage=""
           value={value}
           {...props}
         />
