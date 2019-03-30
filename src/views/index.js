@@ -8,8 +8,8 @@ import {
 
 // Views
 import Landing from "./landing";
-import ReceipientHome from './receipient';
-import ReceipientSignup from './receipient/signup';
+import RecipientHome from './recipient';
+import RecipientSignup from './recipient/signup';
 import ProviderHome from './provider';
 import ProviderSignup from './provider/signup';
 
@@ -34,7 +34,7 @@ class App extends Component {
   };
 
   render() {
-    if (this.state.loggedIn) {
+    // if (this.state.loggedIn) {
       return (
           <Router>
                 <Switch>
@@ -45,13 +45,13 @@ class App extends Component {
                   />
                   <Route
                     exact
-                    path="/recepient/home"
-                    render={routeProps => <ReceipientHome {...routeProps} />}
+                    path="/recipient/home"
+                    render={routeProps => <RecipientHome {...routeProps} />}
                   />
                   <Route
                     exact
-                    path="/recepient/signup"
-                    render={routeProps => <ReceipientSignup {...routeProps} />}
+                    path="/recipient/signup"
+                    render={routeProps => <RecipientSignup {...routeProps} />}
                   />
                   <Route
                     exact
@@ -67,7 +67,7 @@ class App extends Component {
                 </Switch>
           </Router>
       );
-    }
+    // }
   }
 }
 
