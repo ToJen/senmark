@@ -1,5 +1,5 @@
-import React, {  useState } from "react";
-import { Form, Step,  Container } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Form, Step, Container } from "semantic-ui-react";
 
 const genderOptions = [
   { key: "m", text: "Male", value: "male" },
@@ -8,11 +8,12 @@ const genderOptions = [
 
 const BASIC_INFO = "BASIC_INFO";
 const steps = {
-  [BASIC_INFO]: { name: "Basic Info", completed: false, active: true },
+  [BASIC_INFO]: { name: "Basic Info", completed: false, active: true }
 };
 export default function RecipientSignup() {
   const [formState, updateFormState] = useState({});
   const [step, handleStepChange] = useState(steps);
+  const [onBehalf, setOnBehalf] = useState(false);
   const getUpdatedStep = (key, active, completed) => {
     let _step = { ...step };
     _step[key].active = active;
@@ -26,6 +27,32 @@ export default function RecipientSignup() {
         return (
           <Form>
             <Form.Group widths="equal">
+              <Form.Checkbox
+                label="I'm registering on behalf of someone else"
+                onChange={() => setOnBehalf(!onBehalf)}
+              />
+              {onBehalf && (
+                <>
+                  <Form.Input
+                    fluid
+                    label="Your name"
+                    placeholder="Your Name"
+                    onChange={handleChange}
+                  />
+                  <Form.Input
+                    fluid
+                    label="Your phone number"
+                    placeholder="Phone"
+                    onChange={handleChange}
+                  />
+                  <Form.Input
+                    fluid
+                    label="Relationship to them"
+                    placeholder="e.g Spouse, Family Doctor, etc."
+                    onChange={handleChange}
+                  />
+                </>
+              )}
               <Form.Input
                 fluid
                 label="Name"
@@ -80,9 +107,9 @@ export default function RecipientSignup() {
               <Step.Title>{s.name}</Step.Title>
             </Step.Content>
             <Step.Content>
-                <Container style={{marginTop:"1rem"}}>
-            {renderSteps(s.active && k)}
-                </Container>
+              <Container style={{ marginTop: "1rem" }}>
+                {renderSteps(s.active && k)}
+              </Container>
             </Step.Content>
           </Step>
         ))}
