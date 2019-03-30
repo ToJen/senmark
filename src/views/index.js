@@ -8,6 +8,10 @@ import {
 
 // Views
 import Landing from "./landing";
+import ReceipientHome from './receipient';
+import ReceipientSignup from './receipient/signup';
+import ProviderHome from './provider';
+import ProviderSignup from './provider/signup';
 
 class App extends Component {
   constructor(props) {
@@ -39,7 +43,27 @@ class App extends Component {
                     path="/"
                     render={routeProps => <Landing {...routeProps} />}
                   />
-                  <Redirect to="/" />
+                  <Route
+                    exact
+                    path="/recepient/home"
+                    render={routeProps => <ReceipientHome {...routeProps} />}
+                  />
+                  <Route
+                    exact
+                    path="/recepient/signup"
+                    render={routeProps => <ReceipientSignup {...routeProps} />}
+                  />
+                  <Route
+                    exact
+                    path="/provider/home"
+                    render={routeProps => <ProviderHome {...routeProps} />}
+                  />
+                  <Route
+                    exact
+                    path="/provider/signup"
+                    render={routeProps => <ProviderSignup {...routeProps} />}
+                  />
+                  {/* <Redirect to="/" /> */}
                 </Switch>
           </Router>
       );
