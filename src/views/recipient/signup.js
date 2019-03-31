@@ -10,7 +10,7 @@ const BASIC_INFO = "BASIC_INFO";
 const steps = {
   [BASIC_INFO]: { name: "Basic Info", completed: false, active: true }
 };
-export default function RecipientSignup() {
+export default function RecipientSignup({history}) {
   const [formState, updateFormState] = useState({});
   const [step, handleStepChange] = useState(steps);
   const [onBehalf, setOnBehalf] = useState(false);
@@ -88,6 +88,7 @@ export default function RecipientSignup() {
             <Form.Button
               onClick={() => {
                 handleStepChange(getUpdatedStep(BASIC_INFO, true, true));
+                history.push("/recipient/home")
               }}
             >
               Submit

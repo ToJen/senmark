@@ -1,5 +1,13 @@
-import React, {  useState } from "react";
-import { Form, Step,  Container } from "semantic-ui-react";
+import React, { useState } from "react";
+import {
+  Form,
+  Step,
+  Container,
+  Loader,
+  Dimmer,
+  Segment
+} from "semantic-ui-react";
+import { Redirect } from "react-router-dom";
 
 const genderOptions = [
   { key: "m", text: "Male", value: "male" },
@@ -14,9 +22,10 @@ const steps = {
   [PREFERENCES]: { name: "Preferences", completed: false, active: false },
   [SKILLS]: { name: "Skills", completed: false, active: false }
 };
-export default function ProviderSignup() {
+export default function ProviderSignup({history}) {
   const [formState, updateFormState] = useState({});
   const [step, handleStepChange] = useState(steps);
+  const [loading, setLoading] = useState(false);
   const getUpdatedStep = (key, active, completed) => {
     let _step = { ...step };
     _step[key].active = active;
@@ -28,43 +37,56 @@ export default function ProviderSignup() {
     switch (target) {
       case BASIC_INFO:
         return (
-          <Form>
-            <Form.Group widths="equal">
-              <Form.Input
-                fluid
-                label="Name"
-                placeholder="Name"
-                onChange={handleChange}
-              />
-              <Form.Input
-                fluid
-                label="Email"
-                placeholder="Email"
-                onChange={handleChange}
-              />
-              <Form.Input
-                fluid
-                label="Phone"
-                placeholder="Phone"
-                onChange={handleChange}
-              />
-              <Form.Select
-                fluid
-                label="Gender"
-                options={genderOptions}
-                onChange={handleChange}
-                placeholder="Gender"
-              />
-            </Form.Group>
-            <Form.Button
-              onClick={() => {
-                handleStepChange(getUpdatedStep(BASIC_INFO, false, true));
-                handleStepChange(getUpdatedStep(PREFERENCES, true, false));
-              }}
-            >
-              Next
-            </Form.Button>
-          </Form>
+          <>
+            <Dimmer.Dimmable as={Segment} dimmed={loading}>
+              <Dimmer active={loading} inverted>
+                <Loader content="Verifying..." />
+              </Dimmer>
+              <Form>
+                <Form.Group widths="equal">
+                  <Form.Input
+                    fluid
+                    label="Name"
+                    placeholder="Name"
+                    onChange={handleChange}
+                  />
+                  <Form.Input
+                    fluid
+                    label="Email"
+                    placeholder="Email"
+                    onChange={handleChange}
+                  />
+                  <Form.Input
+                    fluid
+                    label="Phone"
+                    placeholder="Phone"
+                    onChange={handleChange}
+                  />
+                  <Form.Select
+                    fluid
+                    label="Gender"
+                    options={genderOptions}
+                    onChange={handleChange}
+                    placeholder="Gender"
+                  />
+                </Form.Group>
+                <Form.Button
+                  onClick={() => {
+                    setLoading(true);
+                    setTimeout(() => {
+                      setLoading(true);
+                      handleStepChange(getUpdatedStep(BASIC_INFO, false, true));
+                      handleStepChange(
+                        getUpdatedStep(PREFERENCES, true, false)
+                      );
+                    }, 1e3);
+                  }}
+                >
+                  Next
+                </Form.Button>
+              </Form>
+            </Dimmer.Dimmable>
+          </>
         );
       case PREFERENCES:
         return (
@@ -82,61 +104,62 @@ export default function ProviderSignup() {
                 placeholder="Hourly Rate"
                 onChange={handleChange}
               />
-            </Form.Group >
+            </Form.Group>
             <Form.Group inline style={{ marginTop: "1rem" }}>
-            <Form.Button
-              onClick={() => {
-                handleStepChange(getUpdatedStep(PREFERENCES, false, false));
-                handleStepChange(getUpdatedStep(BASIC_INFO, true, false));
-              }}
-            >
-              Back
-            </Form.Button>
-            <Form.Button
-              onClick={() => {
-                handleStepChange(getUpdatedStep(PREFERENCES, false, true));
-                handleStepChange(getUpdatedStep(SKILLS, true, false));
-              }}
-            >
-              Next
-            </Form.Button>
+              <Form.Button
+                onClick={() => {
+                  handleStepChange(getUpdatedStep(PREFERENCES, false, false));
+                  handleStepChange(getUpdatedStep(BASIC_INFO, true, false));
+                }}
+              >
+                Back
+              </Form.Button>
+              <Form.Button
+                onClick={() => {
+                  handleStepChange(getUpdatedStep(PREFERENCES, false, true));
+                  handleStepChange(getUpdatedStep(SKILLS, true, false));
+                }}
+              >
+                Next
+              </Form.Button>
             </Form.Group>
           </Form>
         );
       case SKILLS:
         return (
           <Form>
-              <Form.Input
-                fluid
-                label="Qualifications"
-                placeholder="Qualifications"
-                onChange={handleChange}
-              />
-              <Form.Checkbox onChange={handleChange} label="Skill 1" />
-              <Form.Checkbox onChange={handleChange} label="Skill 2" />
-              <Form.Checkbox onChange={handleChange} label="Skill 3" />
-              <Form.Checkbox onChange={handleChange} label="Skill 4" />
+            <Form.Input
+              fluid
+              label="Qualifications"
+              placeholder="Qualifications"
+              onChange={handleChange}
+            />
+            <Form.Checkbox onChange={handleChange} label="Skill 1" />
+            <Form.Checkbox onChange={handleChange} label="Skill 2" />
+            <Form.Checkbox onChange={handleChange} label="Skill 3" />
+            <Form.Checkbox onChange={handleChange} label="Skill 4" />
             <Form.TextArea
-            //   label="About"
+              //   label="About"
               placeholder="Tell us more about you..."
             />
             <Form.Checkbox label="I agree to the Terms and Conditions" />
             <Form.Group inline style={{ marginTop: "1rem" }}>
-            <Form.Button
-              onClick={() => {
-                handleStepChange(getUpdatedStep(PREFERENCES, true, false));
-                handleStepChange(getUpdatedStep(SKILLS, false, false));
-              }}
-            >
-              Back
-            </Form.Button>
-            <Form.Button
-              onClick={() => {
-                handleStepChange(getUpdatedStep(SKILLS, true, true));
-              }}
-            >
-              Submit
-            </Form.Button>
+              <Form.Button
+                onClick={() => {
+                  handleStepChange(getUpdatedStep(PREFERENCES, true, false));
+                  handleStepChange(getUpdatedStep(SKILLS, false, false));
+                }}
+              >
+                Back
+              </Form.Button>
+              <Form.Button
+                onClick={() => {
+                  handleStepChange(getUpdatedStep(SKILLS, true, true));
+                  history.push("/provider/home");
+                }}
+              >
+                Submit
+              </Form.Button>
             </Form.Group>
           </Form>
         );
@@ -153,9 +176,9 @@ export default function ProviderSignup() {
               <Step.Title>{s.name}</Step.Title>
             </Step.Content>
             <Step.Content>
-                <Container style={{marginTop:"1rem"}}>
-            {renderSteps(s.active && k)}
-                </Container>
+              <Container style={{ marginTop: "1rem" }}>
+                {renderSteps(s.active && k)}
+              </Container>
             </Step.Content>
           </Step>
         ))}
