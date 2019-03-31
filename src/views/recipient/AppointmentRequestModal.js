@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   Container,
@@ -6,12 +6,15 @@ import {
   Form,
   Step,
   Button,
-  TextArea,
+  TextArea
 } from "semantic-ui-react";
 import ProviderProfile from "../provider/profile";
+import { DataContext } from "../../contexts/DataContext";
 
 const AppointmentRequestModal = ({ provider }) => {
   const [activeStep, setActiveStep] = useState(0);
+  const [formState, updateFormState] = useState({});
+  const { addAppointmentToLocalStorage } = useContext(DataContext);
   //   unstackable step.group
   return (
     <Container>
@@ -52,25 +55,82 @@ const AppointmentRequestModal = ({ provider }) => {
         </div>
         <div className="appointment-details-step" hidden={activeStep !== 1}>
           <Form>
-            <Form.Input type="time" label="Time" />
-            <Form.Input type="date" label="Date" />
+            <Form.Input
+              type="time"
+              label="Time"
+              onChange={(e, { value }) => {
+                updateFormState({ ...formState, time: value });
+              }}
+            />
+            <Form.Input
+              type="date"
+              label="Date"
+              onChange={(e, { value }) => {
+                updateFormState({ ...formState, date: value });
+              }}
+            />
             <Form.Field
               id="form-textarea-control-opinion"
               control={TextArea}
               label="Other details"
+              onChange={(e, { value }) => {
+                updateFormState({ ...formState, otherDetails: value });
+              }}
             />
           </Form>
-          <Button onClick={() => setActiveStep(2)}>Next</Button>
+          <Button
+            onClick={() => {
+              setActiveStep(2);
+            }}
+          >
+            Next
+          </Button>
         </div>
         <div className="appointment-details-step" hidden={activeStep !== 2}>
           <Form>
-            <Form.Input label="Card Number" />
+            <Form.Input
+              label="Card Number"
+              onChange={(e, { value }) => {
+                updateFormState({ ...formState, cardNo: value });
+              }}
+            />
             <Form.Group label="Expiration Date">
-              <Form.Input type="number" min={1} max={12} palceholder="MM" />
-              <Form.Input type="number" min={2019} palceholder="YYYY" />
+              <Form.Input
+                type="number"
+                min={1}
+                max={12}
+                palceholder="MM"
+                onChange={(e, { value }) => {
+                  updateFormState({ ...formState, month: value });
+                }}
+              />
+              <Form.Input
+                type="number"
+                min={2019}
+                palceholder="YYYY"
+                onChange={(e, { value }) => {
+                  updateFormState({ ...formState, year: value });
+                }}
+              />
+              <Form.Input
+                type="number"
+                min={0}
+                max={999}
+                palceholder="CVV"
+                onChange={(e, { value }) => {
+                  updateFormState({ ...formState, cvv: value });
+                }}
+              />
             </Form.Group>
           </Form>
-          <Button onClick={() => setActiveStep(3)}>Confirm</Button>
+          <Button
+            onClick={() => {
+              setActiveStep(3);
+              addAppointmentToLocalStorage({ formState, provider });
+            }}
+          >
+            Confirm
+          </Button>
         </div>
         <div className="appointment-details-step" hidden={activeStep !== 3}>
           <Link to="/recipient/home">

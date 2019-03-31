@@ -22,7 +22,7 @@ const steps = {
   [PREFERENCES]: { name: "Preferences", completed: false, active: false },
   [SKILLS]: { name: "Skills", completed: false, active: false }
 };
-export default function ProviderSignup({history}) {
+export default function ProviderSignup({ history }) {
   const [formState, updateFormState] = useState({});
   const [step, handleStepChange] = useState(steps);
   const [loading, setLoading] = useState(false);
@@ -32,7 +32,6 @@ export default function ProviderSignup({history}) {
     _step[key].completed = completed;
     return _step;
   };
-  const handleChange = (e, { value }) => updateFormState({ value });
   const renderSteps = target => {
     switch (target) {
       case BASIC_INFO:
@@ -48,25 +47,33 @@ export default function ProviderSignup({history}) {
                     fluid
                     label="Name"
                     placeholder="Name"
-                    onChange={handleChange}
+                    onChange={(e, { value }) => {
+                      updateFormState({ ...formState, name: value });
+                    }}
                   />
                   <Form.Input
                     fluid
                     label="Email"
                     placeholder="Email"
-                    onChange={handleChange}
+                    onChange={(e, { value }) => {
+                      updateFormState({ ...formState, email: value });
+                    }}
                   />
                   <Form.Input
                     fluid
                     label="Phone"
                     placeholder="Phone"
-                    onChange={handleChange}
+                    onChange={(e, { value }) => {
+                      updateFormState({ ...formState, phone: value });
+                    }}
                   />
                   <Form.Select
                     fluid
                     label="Gender"
                     options={genderOptions}
-                    onChange={handleChange}
+                    onChange={(e, { value }) => {
+                      updateFormState({ ...formState, gender: value });
+                    }}
                     placeholder="Gender"
                   />
                 </Form.Group>
@@ -96,13 +103,17 @@ export default function ProviderSignup({history}) {
                 fluid
                 label="Location"
                 placeholder="Location"
-                onChange={handleChange}
+                onChange={(e, { value }) => {
+                  updateFormState({ ...formState, location: value });
+                }}
               />
               <Form.Input
                 fluid
                 label="Hourly Rate"
                 placeholder="Hourly Rate"
-                onChange={handleChange}
+                onChange={(e, { value }) => {
+                  updateFormState({ ...formState, hourlyRate: value });
+                }}
               />
             </Form.Group>
             <Form.Group inline style={{ marginTop: "1rem" }}>
@@ -132,12 +143,34 @@ export default function ProviderSignup({history}) {
               fluid
               label="Qualifications"
               placeholder="Qualifications"
-              onChange={handleChange}
+              onChange={(e, { value }) => {
+                updateFormState({ ...formState, qualification: value });
+              }}
             />
-            <Form.Checkbox onChange={handleChange} label="Skill 1" />
-            <Form.Checkbox onChange={handleChange} label="Skill 2" />
-            <Form.Checkbox onChange={handleChange} label="Skill 3" />
-            <Form.Checkbox onChange={handleChange} label="Skill 4" />
+            <Form.Checkbox
+              onChange={(e, { value }) => {
+                updateFormState({ ...formState, skill1: value });
+              }}
+              label="Skill 1"
+            />
+            <Form.Checkbox
+              onChange={(e, { value }) => {
+                updateFormState({ ...formState, skill2: value });
+              }}
+              label="Skill 2"
+            />
+            <Form.Checkbox
+              onChange={(e, { value }) => {
+                updateFormState({ ...formState, skill3: value });
+              }}
+              label="Skill 3"
+            />
+            <Form.Checkbox
+              onChange={(e, { value }) => {
+                updateFormState({ ...formState, skil4: value });
+              }}
+              label="Skill 4"
+            />
             <Form.TextArea
               //   label="About"
               placeholder="Tell us more about you..."

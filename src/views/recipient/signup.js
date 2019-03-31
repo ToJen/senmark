@@ -20,7 +20,6 @@ export default function RecipientSignup({history}) {
     _step[key].completed = completed;
     return _step;
   };
-  const handleChange = (e, { value }) => updateFormState({ value });
   const renderSteps = target => {
     switch (target) {
       case BASIC_INFO:
@@ -37,19 +36,25 @@ export default function RecipientSignup({history}) {
                     fluid
                     label="Your name"
                     placeholder="Your Name"
-                    onChange={handleChange}
+                    onChange={(e, {value}) =>{
+                      updateFormState({...formState,  name: value }
+                      )}}
                   />
                   <Form.Input
                     fluid
                     label="Your phone number"
                     placeholder="Phone"
-                    onChange={handleChange}
+                    onChange={(e, {value}) =>{
+                      updateFormState({...formState,  phone: value }
+                      )}}
                   />
                   <Form.Input
                     fluid
                     label="Relationship to them"
                     placeholder="e.g Spouse, Family Doctor, etc."
-                    onChange={handleChange}
+                    onChange={(e, {value}) =>{
+                      updateFormState({...formState,  relationship: value }
+                      )}}
                   />
                 </>
               )}
@@ -57,31 +62,41 @@ export default function RecipientSignup({history}) {
                 fluid
                 label="Name"
                 placeholder="Name"
-                onChange={handleChange}
+                onChange={(e, {value}) =>{
+                  updateFormState({...formState,  relationName: value }
+                  )}}
               />
               <Form.Input
                 fluid
                 label="Email"
                 placeholder="Email"
-                onChange={handleChange}
+                onChange={(e, {value}) =>{
+                  updateFormState({...formState,  email: value }
+                  )}}
               />
               <Form.Input
                 fluid
                 label="Phone"
                 placeholder="Phone"
-                onChange={handleChange}
+                onChange={(e, {value}) =>{
+                  updateFormState({...formState,  relationPhone: value }
+                  )}}
               />
               <Form.Input
                 fluid
                 label="Location"
                 placeholder="Location"
-                onChange={handleChange}
+                onChange={(e, {value}) =>{
+                  updateFormState({...formState,  location: value }
+                  )}}
               />
               <Form.Select
                 fluid
                 label="Gender"
                 options={genderOptions}
-                onChange={handleChange}
+                onChange={(e, {value}) =>{
+                  updateFormState({...formState,  gender: value }
+                  )}}
                 placeholder="Gender"
               />
             </Form.Group>
