@@ -1,25 +1,21 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Grid } from "semantic-ui-react";
-import { DataContext } from "../../contexts/DataContext";
 
 const ProviderHome = () => {
-  const {
-    state: { appointments }
-  } = useContext(DataContext);
 
   return (
-    <Grid columns={2} stackable>
-      <Grid.Column>
+    <Grid textAlign='center' style={{ marginTop: '60%' }} verticalAlign='middle'>
+      <Grid.Row centered>
         <Link to="/provider/view-requests">
-          <Button primary>View Requests</Button>
+          <Button primary size="massive">View Requests</Button>
         </Link>
+      </Grid.Row>
+      <Grid.Row centered>
         <Link to="/provider/view-appointments">
-          <Button secondary>View Appointments</Button>
-          {appointments &&
-            appointments.map((a, i) => <pre key={i}>{JSON.stringify(a)}</pre>)}
+        <Button secondary size="massive">View Appointments</Button>
         </Link>
-      </Grid.Column>
+      </Grid.Row>
     </Grid>
   );
 };

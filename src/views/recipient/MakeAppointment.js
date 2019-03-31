@@ -74,7 +74,8 @@ const source = [
   })
 ];
 console.log({ source });
-const ProvidersList = ({ providers }) => {
+
+const ProvidersList = ({ providers, data }) => {
   const [isRequestModalOpen, toggleRequestModal] = useState(false);
   const [selectedProvider, setSelectedProvider] = useState({});
   return (
@@ -84,6 +85,7 @@ const ProvidersList = ({ providers }) => {
           visible={isRequestModalOpen}
           toggleModal={() => toggleRequestModal(!isRequestModalOpen)}
           provider={selectedProvider}
+          services={data.services}
         />
       )}
       <List divided relaxed link>
@@ -239,7 +241,7 @@ const MakeAppointment = ({ props }) => {
           multiple
         />
       </Form.Group>
-      <ProvidersList providers={results} />
+      <ProvidersList providers={results} data={formState} />
     </Container>
   );
 };

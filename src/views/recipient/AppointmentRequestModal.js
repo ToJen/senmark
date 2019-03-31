@@ -13,7 +13,12 @@ import {
 import ProviderProfile from "../provider/profile";
 import { DataContext } from "../../contexts/DataContext";
 
-const AppointmentRequestModal = ({ provider, visible, toggleModal }) => {
+const AppointmentRequestModal = ({
+  provider,
+  visible,
+  toggleModal,
+  services
+}) => {
   const [activeStep, setActiveStep] = useState(0);
   const [formState, updateFormState] = useState({});
   const {
@@ -169,14 +174,18 @@ const AppointmentRequestModal = ({ provider, visible, toggleModal }) => {
                   icon="right chevron"
                   content="Next"
                   onClick={() => {
-                    setActiveStep(3);
-                    addAppointmentRequestToLocalStorage({
+                    const request = {
                       _id: appointmentRequests.length,
                       provider: provider.name,
                       recipient: `John Ford`,
                       price: provider.price,
-                      location: "307 Lake Shore Blvd E, Toronto, ON M5A 1C1"
-                    });
+                      location: "307 Lake Shore Blvd E, Toronto, ON M5A 1C1",
+                      services,
+                      date: `${formState.date} at ${formState.time}`
+                    };
+                    console.log(request);
+                    setActiveStep(3);
+                    addAppointmentRequestToLocalStorage(request);
                   }}
                 />
               </Button.Group>

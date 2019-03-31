@@ -1,18 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Container, Grid } from "semantic-ui-react";
+import { Button, Grid } from "semantic-ui-react";
 
 const RecipientHome = () => {
   return (
-    <Grid columns={2} stackable>
-      <Grid.Column>
+    <Grid textAlign='center' style={{ marginTop: '60%' }} verticalAlign='middle'>
+      <Grid.Row centered>
         <Link to="/recipient/make-appointment">
-          <Button primary>Make Appointment</Button>
+          <Button primary size="massive">Make Appointment</Button>
         </Link>
+      </Grid.Row>
+      <Grid.Row centered>
         <Link to="/recipient/view-appointments">
-        <Button secondary>View Appointments</Button>
+        <Button secondary size="massive">View Appointments</Button>
         </Link>
-      </Grid.Column>
+      </Grid.Row>
     </Grid>
   );
 };

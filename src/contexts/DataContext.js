@@ -2,6 +2,20 @@ import React, { createContext, useState, useEffect } from "react";
 import faker from "faker";
 import _ from "lodash";
 
+
+const tasks = [
+  { key: "bt", text: "Bathing", value: "Bathing" },
+  { key: "dr", text: "Dressing", value: "Dressing" },
+  { key: "lh", text: "Light Homekeeping", value: "Light Homekeeping" },
+  { key: "so", text: "Socialization", value: "Socialization" },
+  { key: "hc", text: "Haircare", value: "Haircare" },
+  { key: "sc", text: "Skincare", value: "Skincare" },
+  { key: "tl", text: "Toileting", value: "Toileting" },
+  { key: "lf", text: "Lifts", value: "Lifts" },
+  { key: "tr", text: "Transfers", value: "Transfers" },
+  { key: "ot", text: "Other", value: "Other" }
+];
+
 const stubAppointments = [
   {
     _id:0,
@@ -34,7 +48,11 @@ const stubAppointmentRequests = _.times(10, index => ({
   recipient: `${faker.name.firstName()} ${faker.name.lastName()}`,
   provider: `${faker.name.firstName()} ${faker.name.lastName()}`,
   price: faker.finance.amount(0, 100, 2, "$"),
-  location: "307 Lake Shore Blvd E, Toronto, ON M5A 1C1"
+  location: "307 Lake Shore Blvd E, Toronto, ON M5A 1C1",
+  services: _.times(
+    Number(faker.random.number({ min: 1, max: tasks.length })),
+    i => tasks[i].text
+  ),
 }))
 
 const DataContext = createContext();
