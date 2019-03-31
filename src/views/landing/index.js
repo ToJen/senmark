@@ -37,7 +37,6 @@ const Heading = ({ mobile, toggleRoles }) => (
     <Header
       as="h2"
       content="Get whatever help you want when you want."
-      inverted
       style={{
         fontSize: mobile ? "1.5em" : "1.7em",
         fontWeight: "normal",
@@ -69,7 +68,6 @@ class DesktopContainer extends Component {
           onBottomPassedReverse={this.hideFixedMenu}
         >
           <Segment
-            inverted
             textAlign="center"
             style={{ minHeight: 700, padding: "1em 0em", height: "100%" }}
             vertical
@@ -132,7 +130,6 @@ class MobileContainer extends Component {
         <Sidebar
           as={Menu}
           animation="push"
-          inverted
           onHide={this.handleSidebarHide}
           vertical
           visible={sidebarOpened}
@@ -148,13 +145,12 @@ class MobileContainer extends Component {
 
         <Sidebar.Pusher dimmed={sidebarOpened}>
           <Segment
-            inverted
             textAlign="center"
             style={{ minHeight: 350, padding: "1em 0em", height: "100%" }}
             vertical
           >
             <Container>
-              <Menu inverted pointing secondary size="large">
+              <Menu pointing secondary size="large">
                 <Menu.Item onClick={this.handleToggle}>
                   <Icon name="sidebar" />
                 </Menu.Item>

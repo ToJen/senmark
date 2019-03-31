@@ -45,7 +45,7 @@ export default function renderRoles() {
                     <Grid.Row centered>
                       <Link to={"/recipient/signup"}>
                         <Button animated>
-                          <Button.Content visible>Recipient</Button.Content>
+                          <Button.Content visible>Patient</Button.Content>
                           <Button.Content hidden>
                             <Icon name="arrow right" />
                           </Button.Content>

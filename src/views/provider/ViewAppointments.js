@@ -21,11 +21,11 @@ export default function ViewAppointment() {
         />
       )}
       <Header textAlign="center">Your Appointments</Header>
-      {appointments ? (
+      
         <Calendar
-          dates={appointments.map(i => {
+          dates={appointments ? appointments.map(i => {
             return { ...i, title: i.recipient, due: i.date };
-          })}
+          }) :[]}
           onSelectEvent={event => {
             console.log(event);
             const { appointmentId } = event;
@@ -37,9 +37,6 @@ export default function ViewAppointment() {
             setSelectedAppointment(_selectedAppointment);
           }}
         />
-      ) : (
-        "Loading..."
-      )}
     </>
   );
 }

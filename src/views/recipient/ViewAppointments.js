@@ -8,9 +8,9 @@ export default function ViewAppointment() {
   const [isAppointmentModalOpen, toggleAppointmentModal] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState({});
   const {
-    state: { dates, appointments }
+    state: { appointments }
   } = useContext(DataContext);
-  console.log(dates);
+  console.log(appointments);
   return (
     <>
       {isAppointmentModalOpen && (
@@ -21,19 +21,22 @@ export default function ViewAppointment() {
         />
       )}
       <Header textAlign="center">Your Appointments</Header>
-      <Calendar
-        dates={dates}
-        onSelectEvent={event => {
-          console.log(event);
-          const { appointmentId } = event;
-          const _selectedAppointment = appointments.find(
-            i => i._id === appointmentId
-          );
-          console.log(_selectedAppointment);
-          toggleAppointmentModal(!isAppointmentModalOpen)
-          setSelectedAppointment(_selectedAppointment);
-        }}
-      />
+      
+        <Calendar
+          dates={appointments ? appointments.map(i => {
+            return { ...i, title: i.provider, due: i.date };
+          }) :[]}
+          onSelectEvent={event => {
+            console.log(event);
+            const { appointmentId } = event;
+            const _selectedAppointment = appointments.find(
+              i => i._id === appointmentId
+            );
+            console.log(_selectedAppointment);
+            toggleAppointmentModal(!isAppointmentModalOpen);
+            setSelectedAppointment(_selectedAppointment);
+          }}
+        />
     </>
   );
 }
