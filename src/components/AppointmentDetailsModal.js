@@ -17,7 +17,7 @@ const AppointmentDetailsModal = ({ visible, appointment, toggleModal }) => {
               <Card.Header>Appointment Details</Card.Header>
               <Card.Meta> {"<2 km away"}</Card.Meta>
               <Card.Description>
-                {Object.keys(appointment).map((item, i) => {
+                {appointment && Object.keys(appointment).map((item, i) => {
                     if(item !== "_id") return <Segment.Group children={`${item}: ${appointment[item]}`} key={i} />;
                 })}
               </Card.Description>

@@ -26,23 +26,28 @@ const genderOptions = [
   { key: "m", text: "Male", value: "male" },
   { key: "f", text: "Female", value: "female" }
 ];
-const source = _.times(10, () => ({
-  title: faker.name.title(),
-  name: `${faker.name.firstName()} ${faker.name.lastName()}`,
-  rating: Number(faker.random.number()) % 5,
-  avatar: faker.internet.avatar(),
-  price: faker.finance.amount(0, 100, 2, "$"),
-  distance: Number(faker.random.number()) % 6,
-  services: _.times(
-    Number(faker.random.number({ min: 1, max: tasks.length })),
-    i => tasks[i].text
-  ),
-  languages: _.times(
-    Number(faker.random.number({ min: 1, max: languageOptions.length })),
-    i => languageOptions[i].text
-  ),
-  gender: genderOptions[Number(faker.random.number({ min: 0, max: 1 }))].text
-}));
+const source = _.times(10, () => {
+  const gender =
+    genderOptions[Number(faker.random.number({ min: 0, max: 1 }))].text;
+
+  return {
+    title: faker.name.title(),
+    gender,
+    name: `${faker.name.firstName(gender)} ${faker.name.lastName(gender)}`,
+    rating: Number(faker.random.number()) % 5,
+    avatar: faker.internet.avatar(),
+    price: faker.finance.amount(0, 100, 2, "$"),
+    distance: Number(faker.random.number()) % 6,
+    services: _.times(
+      Number(faker.random.number({ min: 1, max: tasks.length })),
+      i => tasks[i].text
+    ),
+    languages: _.times(
+      Number(faker.random.number({ min: 1, max: languageOptions.length })),
+      i => languageOptions[i].text
+    )
+  };
+});
 console.log({ source });
 const ProvidersList = ({ providers }) => {
   const [isRequestModalOpen, toggleRequestModal] = useState(false);
@@ -51,6 +56,7 @@ const ProvidersList = ({ providers }) => {
     <>
       {isRequestModalOpen && (
         <AppointmentRequestModal
+          visible={isRequestModalOpen}
           toggleModal={() => toggleRequestModal(!isRequestModalOpen)}
           provider={selectedProvider}
         />

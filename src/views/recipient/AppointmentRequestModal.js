@@ -6,56 +6,52 @@ import {
   Form,
   Step,
   Button,
-  TextArea
+  TextArea,
+  Modal,
+  Grid
 } from "semantic-ui-react";
 import ProviderProfile from "../provider/profile";
 import { DataContext } from "../../contexts/DataContext";
-import faker from "faker";
 
-const AppointmentRequestModal = ({ provider }) => {
+const AppointmentRequestModal = ({ provider, visible, toggleModal }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [formState, updateFormState] = useState({});
-  const { addAppointmentRequestToLocalStorage, state: {appointmentRequests} } = useContext(
-    DataContext
-  );
-  //   unstackable step.group
-  return (
-    <Container>
-      <Step.Group>
-        <Step active={activeStep === 0} completed={activeStep > 0}>
-          <Icon name="user circle" />
-          <Step.Content>
-            <Step.Title>{provider.name}'s Profile</Step.Title>
-          </Step.Content>
-        </Step>
+  const {
+    addAppointmentRequestToLocalStorage,
+    state: { appointmentRequests }
+  } = useContext(DataContext);
 
-        <Step active={activeStep === 1} completed={activeStep > 1}>
-          <Icon name="unordered list" />
-          <Step.Content>
-            <Step.Title>Appointment Details</Step.Title>
-          </Step.Content>
-        </Step>
-
-        <Step active={activeStep === 2} completed={activeStep > 2}>
-          <Icon name="payment" />
-          <Step.Content>
-            <Step.Title>Payment</Step.Title>
-          </Step.Content>
-        </Step>
-
-        <Step active={activeStep === 3}>
-          <Icon name="info" />
-          <Step.Content>
-            <Step.Title>Receipt</Step.Title>
-          </Step.Content>
-        </Step>
-      </Step.Group>
-
-      <Container>
+  const renderProfileStep = () => {
+    return (
+      <Container fluid>
         <div className="profile-step" hidden={activeStep !== 0}>
-          <ProviderProfile data={provider} />
-          <Button onClick={() => setActiveStep(1)}>Next</Button>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column>
+                <ProviderProfile data={provider} />
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column>
+                <Button.Group>
+                  <Button
+                    labelPosition="right"
+                    icon="right chevron"
+                    content="Next"
+                    onClick={() => setActiveStep(1)}
+                  />
+                </Button.Group>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </div>
+      </Container>
+    );
+  };
+
+  const renderFormStep = () => {
+    return (
+      <Container fluid>
         <div className="appointment-details-step" hidden={activeStep !== 1}>
           <Form>
             <Form.Input
@@ -81,15 +77,30 @@ const AppointmentRequestModal = ({ provider }) => {
               }}
             />
           </Form>
-          <Button
-            onClick={() => {
-              setActiveStep(2);
-            }}
-          >
-            Next
-          </Button>
+
+          <Button.Group>
+            <Button
+              labelPosition="left"
+              icon="left chevron"
+              content="Back"
+              onClick={() => setActiveStep(0)}
+            />
+            <Button
+              labelPosition="right"
+              icon="right chevron"
+              content="Next"
+              onClick={() => setActiveStep(2)}
+            />
+          </Button.Group>
         </div>
-        <div className="appointment-details-step" hidden={activeStep !== 2}>
+      </Container>
+    );
+  };
+
+  const renderPaymentStep = () => {
+    return (
+      <Container fluid>
+        <div className="payment-step" hidden={activeStep !== 2}>
           <Form>
             <Form.Input
               label="Card Number"
@@ -97,7 +108,11 @@ const AppointmentRequestModal = ({ provider }) => {
                 updateFormState({ ...formState, cardNo: value });
               }}
             />
-            <Form.Group label="Expiration Date">
+            <Grid>
+            <Grid.Row columns={3} label="Expiration Date">
+
+      <Grid.Column>
+              <label>MM</label>
               <Form.Input
                 type="number"
                 min={1}
@@ -107,6 +122,11 @@ const AppointmentRequestModal = ({ provider }) => {
                   updateFormState({ ...formState, month: value });
                 }}
               />
+
+      </Grid.Column>
+
+      <Grid.Column>
+              <label>YYYY</label>
               <Form.Input
                 type="number"
                 min={2019}
@@ -115,6 +135,11 @@ const AppointmentRequestModal = ({ provider }) => {
                   updateFormState({ ...formState, year: value });
                 }}
               />
+
+      </Grid.Column>
+
+      <Grid.Column>
+              <label>CVV</label>
               <Form.Input
                 type="number"
                 min={0}
@@ -124,30 +149,94 @@ const AppointmentRequestModal = ({ provider }) => {
                   updateFormState({ ...formState, cvv: value });
                 }}
               />
-            </Form.Group>
+
+      </Grid.Column>
+            </Grid.Row>
+            </Grid>
           </Form>
-          <Button
-            onClick={() => {
-              setActiveStep(3);
-              addAppointmentRequestToLocalStorage({
-                _id: appointmentRequests.length,
-                provider: provider.name,
-                recipient: `John Ford`,
-                price: provider.price,
-                location: "307 Lake Shore Blvd E, Toronto, ON M5A 1C1"
-              });
-            }}
-          >
-            Confirm
-          </Button>
+
+          <Button.Group>
+            <Button
+              labelPosition="left"
+              icon="left chevron"
+              content="Back"
+              onClick={() => setActiveStep(1)}
+            />
+            <Button
+              labelPosition="right"
+              icon="right chevron"
+              content="Next"
+              onClick={() => {
+                setActiveStep(3);
+                addAppointmentRequestToLocalStorage({
+                  _id: appointmentRequests.length,
+                  provider: provider.name,
+                  recipient: `John Ford`,
+                  price: provider.price,
+                  location: "307 Lake Shore Blvd E, Toronto, ON M5A 1C1"
+                });
+              }}
+            />
+          </Button.Group>
         </div>
-        <div className="appointment-details-step" hidden={activeStep !== 3}>
+      </Container>
+    );
+  };
+
+  const renderFinalStep = () => {
+    return (
+      <Container fluid>
+        <div className="confirmation-step" hidden={activeStep !== 3}>
           <Link to="/recipient/home">
-            <Button>Done</Button>
+            <Button color="green">Done</Button>
           </Link>
         </div>
       </Container>
-    </Container>
+    );
+  };
+  return (
+    <Modal open={visible}>
+      <Modal.Content scrolling>
+        <Step.Group fluid>
+          <Step active={activeStep === 0} completed={activeStep > 0}>
+            <Icon name="user circle" />
+            <Step.Content>
+              <Step.Title>{provider.name}'s Profile</Step.Title>
+              {renderProfileStep()}
+            </Step.Content>
+          </Step>
+
+          <Step active={activeStep === 1} completed={activeStep > 1}>
+            <Icon name="unordered list" />
+            <Step.Content>
+              <Step.Title>Appointment Details</Step.Title>
+              {renderFormStep()}
+            </Step.Content>
+          </Step>
+
+          <Step active={activeStep === 2} completed={activeStep > 2}>
+            <Icon name="payment" />
+            <Step.Content>
+              <Step.Title>Payment</Step.Title>
+              {renderPaymentStep()}
+            </Step.Content>
+          </Step>
+
+          <Step active={activeStep === 3}>
+            <Icon name="info" />
+            <Step.Content>
+              <Step.Title>Receipt</Step.Title>
+              {renderFinalStep()}
+            </Step.Content>
+          </Step>
+        </Step.Group>
+      </Modal.Content>
+      <Modal.Actions>
+        <Button color="red" onClick={() => toggleModal()}>
+          <Icon name="remove" /> Close
+        </Button>
+      </Modal.Actions>
+    </Modal>
   );
 };
 

@@ -1,43 +1,82 @@
 import React from "react";
-import { Grid, Container, Image, Segment, Rating } from "semantic-ui-react";
+import {
+  Button,
+  Container,
+  Image,
+  Card,
+  Segment,
+  Rating
+} from "semantic-ui-react";
+import faker from "faker";
+
+const colors = [
+  "red",
+  "orange",
+  "yellow",
+  "olive",
+  "green",
+  "teal",
+  "blue",
+  "violet",
+  "purple",
+  "pink",
+  "brown",
+  "grey",
+  "black"
+];
+
+const getRandomColor = () => {
+  return colors[Number(faker.random.number({ min: 1, max: colors.length }))];
+};
 
 const ProviderProfile = ({ data }) => {
   return (
-    <Container>
-      <Grid stackable>
-        <Grid.Column>
-          <Segment.Group>
-            <Segment className="provider-profile-header">
-              <Image avatar src={data.avatar} />
-            </Segment>
-            <Segment>{data.name}</Segment>
-            <Segment>{data.title}</Segment>
-            <Segment>
-              <Rating
-                icon="star"
-                defaultRating={data.rating}
-                maxRating={5}
+    <Container fluid>
+      <Card centered fluid>
+        <Image src={data.avatar} fluid centered />
+        <Card.Content>
+          <Card.Header>{data.name}</Card.Header>
+          <Card.Meta>
+            <Rating
+              icon="star"
+              defaultRating={data.rating}
+              maxRating={5}
+              disabled
+            />
+          </Card.Meta>
+        </Card.Content>
+        <Card.Content>
+          <Segment>{data.price}/hr</Segment>
+          <Segment>About {data.distance}km from you</Segment>
+          <Segment>{data.gender}</Segment>
+        </Card.Content>
+        <Card.Content>
+          <Card.Description>Services</Card.Description>
+          {data.services.map((service, i) => {
+            return (
+              <Button
+                children={service}
+                key={i}
                 disabled
+                color={getRandomColor()}
               />
-              <Segment>{data.price}</Segment>
-              <Segment>About {data.distance}km from you</Segment>
-              <Segment>Gender {data.gender}</Segment>
-              <Segment>
-                Services
-                {data.services.map((service, i) => {
-                  return <Segment.Group children={service} key={i} />;
-                })}
-              </Segment>
-              <Segment>
-                Languages Spoken
-                {data.languages.map((language, i) => {
-                  return <Segment.Group children={language} key={i} />;
-                })}
-              </Segment>
-            </Segment>
-          </Segment.Group>
-        </Grid.Column>
-      </Grid>
+            );
+          })}
+        </Card.Content>
+        <Card.Content>
+          <Card.Description>Languages Spoken</Card.Description>
+          {data.languages.map((language, i) => {
+            return (
+              <Button
+                children={language}
+                key={i}
+                disabled
+                color={getRandomColor()}
+              />
+            );
+          })}
+        </Card.Content>
+      </Card>
     </Container>
   );
 };
