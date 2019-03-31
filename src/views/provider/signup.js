@@ -104,6 +104,7 @@ export default function ProviderSignup({ history }) {
                     updateFormState({...formState,  languageOptions: value }
                     )}}
                   placeholder=""
+                  multiple
                 />
                 <Form.Select
                   fluid
