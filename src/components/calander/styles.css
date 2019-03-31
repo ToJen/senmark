@@ -1,0 +1,78 @@
+.rbc-off-range-bg {
+    background-color: #fafafa;
+  }
+  
+  .rbc-day-bg {
+    box-sizing: border-box;
+    /* height: 98px; */
+    /* width: 157px; */
+    border: 1px solid #ebebeb;
+    background-color: #ffffff;
+    box-shadow: 1px 1px 0 0 #ecf1f8;
+  }
+  
+  .rbc-header,
+  .rbc-toolbar-label {
+    height: 18px;
+    width: 59px;
+    color: #1b1c1d;
+    font-size: 15px;
+    letter-spacing: 0.94px;
+    line-height: 18px;
+    border: none;
+    margin-bottom: 1rem;
+  }
+
+  .rbc-toolbar-label {
+    padding: 2rem 0rem 2rem 0rem !important;
+    width: 100%;
+  }
+  
+  .rbc-event {
+    background-color: #c072d3;
+    /* height: 1rem; */
+  }
+  .rbc-show-more {
+    color: #c072d3;
+  }
+  .rbc-date-cell {
+    /* height: 17px; */
+    /* width: 9px; */
+    color: #1b1c1d;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+  }
+  
+  .rbc-event-content {
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 12px;
+    white-space: unset !important;
+  }
+  
+  .rbc-month-view {
+    border: none;
+  }
+  
+  .rbc-header + .rbc-header,
+  .rbc-day-bg + .rbc-day-bg {
+    border-left: none;
+  }
+  
+  .rbc-month-row + .rbc-month-row {
+    border-top: none;
+  }
+  
+  .rbc-toolbar {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    display: grid;
+    justify-content: space-evenly;
+    text-align: center;
+  }
+  
+  /* .rbc-row-segment {
+    white-space: unset !important;
+  } */
