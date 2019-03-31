@@ -130,9 +130,9 @@ const AppointmentRequestModal = ({ provider }) => {
             onClick={() => {
               setActiveStep(3);
               addAppointmentRequestToLocalStorage({
-                _id: appointmentRequests.length.toString(),
+                _id: appointmentRequests.length,
                 provider: provider.name,
-                recipient: `${faker.name.firstName()} ${faker.name.lastName()}`,
+                recipient: `John Ford`,
                 price: provider.price,
                 location: "307 Lake Shore Blvd E, Toronto, ON M5A 1C1"
               });

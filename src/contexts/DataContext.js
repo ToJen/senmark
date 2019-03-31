@@ -4,7 +4,7 @@ import _ from "lodash";
 
 const stubAppointments = [
   {
-    _id: "0",
+    _id:0,
     recipient: `${faker.name.firstName()} ${faker.name.lastName()}`,
     provider: `${faker.name.firstName()} ${faker.name.lastName()}`,
     price: faker.finance.amount(0, 100, 2, "$"),
@@ -12,7 +12,7 @@ const stubAppointments = [
     services: ["bathing", "dressing", "toileting"]
   },
   {
-    _id: "1",
+    _id: 1,
     recipient: `${faker.name.firstName()} ${faker.name.lastName()}`,
     provider: `${faker.name.firstName()} ${faker.name.lastName()}`,
     price: faker.finance.amount(0, 100, 2, "$"),
@@ -20,7 +20,7 @@ const stubAppointments = [
     services: ["hair care", "skin care", "toileting"]
   },
   {
-    _id: "2",
+    _id: 2,
     recipient: `${faker.name.firstName()} ${faker.name.lastName()}`,
     provider: `${faker.name.firstName()} ${faker.name.lastName()}`,
     price: faker.finance.amount(0, 100, 2, "$"),
@@ -38,6 +38,13 @@ const stubAppointmentRequests = _.times(10, index => ({
 }))
 
 const DataContext = createContext();
+
+const fetchAppointmentRequestsFromLocalStorage = () => {
+  return localStorage.getItem("appointmentRequests")
+    ? JSON.parse(localStorage.getItem("appointmentRequests"))
+    : stubAppointmentRequests;
+};
+
 const DataProvider = props => {
   const [state, setState] = useState({
     dates: [
@@ -54,14 +61,10 @@ const DataProvider = props => {
       { title: "Hacking Health", due: new Date(), appointmentId: "2" }
     ],
     appointments: stubAppointments,
-    appointmentRequests: stubAppointmentRequests
+    appointmentRequests: fetchAppointmentRequestsFromLocalStorage()
   });
   
-  const fetchAppointmentRequestsFromLocalStorage = () => {
-    return localStorage.getItem("appointmentRequests")
-      ? JSON.parse(localStorage.getItem("appointmentRequests"))
-      : [];
-  };
+
 
   const addAppointmentRequestToLocalStorage = appointmentRequest => {
     localStorage.setItem(
@@ -78,10 +81,7 @@ const DataProvider = props => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      window.addEventListener("storage", localStorageUpdated);    localStorage.setItem(
-        "appointmentRequests",
-        JSON.stringify(state.appointmentRequests)
-      );
+      window.addEventListener("storage", localStorageUpdated);
     }
   }, []);
 
