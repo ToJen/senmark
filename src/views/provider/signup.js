@@ -7,11 +7,30 @@ import {
   Dimmer,
   Segment
 } from "semantic-ui-react";
-import { Redirect } from "react-router-dom";
 
 const genderOptions = [
   { key: "m", text: "Male", value: "male" },
   { key: "f", text: "Female", value: "female" }
+];
+
+const languageOptions = [
+  { key: "en", text: "English", value: "english" },
+  { key: "fr", text: "French", value: "french" },
+  { key: "es", text: "Spanish", value: "spanish" },
+  { key: "pt", text: "Portugese", value: "portugese" }
+];
+
+const taskOptions = [
+  { key: "bt", text: "Bathing", value: "bathing" },
+  { key: "dr", text: "Dressing", value: "dressing" },
+  { key: "lh", text: "Light Homekeeping", value: "lightHomekeeping" },
+  { key: "so", text: "Socialization", value: "socialization" },
+  { key: "hc", text: "Haircare", value: "haircare" },
+  { key: "sc", text: "Skincare", value: "skincare" },
+  { key: "tl", text: "Toileting", value: "toileting" },
+  { key: "lf", text: "Lifts", value: "lifts" },
+  { key: "tr", text: "Transfers", value: "transfers" },
+  { key: "ot", text: "Other", value: "other" }
 ];
 
 const BASIC_INFO = "BASIC_INFO";
@@ -22,7 +41,7 @@ const steps = {
   [PREFERENCES]: { name: "Preferences", completed: false, active: false },
   [SKILLS]: { name: "Skills", completed: false, active: false }
 };
-export default function ProviderSignup({history}) {
+export default function ProviderSignup({ history }) {
   const [formState, updateFormState] = useState({});
   const [step, handleStepChange] = useState(steps);
   const [loading, setLoading] = useState(false);
@@ -70,6 +89,21 @@ export default function ProviderSignup({history}) {
                     placeholder="Gender"
                   />
                 </Form.Group>
+                <Form.Select
+                  fluid
+                  label="Languages Spoken"
+                  options={languageOptions}
+                  onChange={handleChange}
+                  placeholder=""
+                />
+                <Form.Select
+                  fluid
+                  label="Tasks"
+                  options={taskOptions}
+                  onChange={handleChange}
+                  placeholder=""
+                  multiple
+                />
                 <Form.Button
                   onClick={() => {
                     setLoading(true);
