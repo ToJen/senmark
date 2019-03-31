@@ -9,6 +9,7 @@ import { DataProvider } from "../contexts/DataContext";
 
 // Views
 import Landing from "./landing";
+import Roles from "./landing/roles";
 
 import RecipientHome from "./recipient";
 import RecipientSignup from "./recipient/signup";
@@ -51,6 +52,11 @@ class App extends Component {
               exact
               path="/"
               render={routeProps => <Landing {...routeProps} />}
+            />
+            <Route
+              exact
+              path="/roles"
+              render={routeProps => <Roles {...routeProps} />}
             />
             <Route
               exact
