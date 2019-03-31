@@ -10,7 +10,7 @@ export default function ViewAppointment() {
   const {
     state: { appointments }
   } = useContext(DataContext);
-  console.log(appointments);
+  console.log({appointments, selectedAppointment});
   return (
     <>
       {isAppointmentModalOpen && (
@@ -24,15 +24,15 @@ export default function ViewAppointment() {
       
         <Calendar
           dates={appointments ? appointments.map(i => {
-            return { ...i, title: i.provider, due: i.date };
+            return { ...i, title: i.provider, due: i.date, id: i.id };
           }) :[]}
           onSelectEvent={event => {
             console.log(event);
-            const { appointmentId } = event;
+            const { id } = event;
             const _selectedAppointment = appointments.find(
-              i => i._id === appointmentId
+              i => i._id.toString() === id.toString()
             );
-            console.log(_selectedAppointment);
+            console.log({_selectedAppointment, appointments, id, event});
             toggleAppointmentModal(!isAppointmentModalOpen);
             setSelectedAppointment(_selectedAppointment);
           }}

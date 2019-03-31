@@ -36,7 +36,7 @@ const Heading = ({ mobile, toggleRoles }) => (
     <Image src="logo.png" />
     <Header
       as="h2"
-      content="Transforming Homecare"
+      content="Transforming Home Care"
       style={{
         fontSize: mobile ? "1.5em" : "1.7em",
         fontWeight: "normal",
@@ -147,7 +147,9 @@ class MobileContainer extends Component {
           <Menu.Item as="a">Work</Menu.Item>
           <Menu.Item as="a">Careers</Menu.Item>
           <Menu.Item as="a">Log in</Menu.Item>
-          <Menu.Item as="a">Sign Up</Menu.Item>
+          <Menu.Item as="a" onClick={() => this.props.toggleRoles(true)}>
+            Sign Up
+          </Menu.Item>
         </Sidebar>
 
         <Sidebar.Pusher dimmed={sidebarOpened}>
@@ -157,18 +159,21 @@ class MobileContainer extends Component {
             vertical
           >
             <Container>
-              <Menu pointing secondary size="large">
+              <Menu pointing secondary size="large" style={{ border: "none" }}>
                 <Menu.Item onClick={this.handleToggle}>
                   <Icon name="sidebar" />
                 </Menu.Item>
                 <Menu.Item position="right">
-                  <Button as="a" inverted>
+                  <Button as="a" style={{ color: "black" }}>
                     Log in
                   </Button>
                   <Button
                     as="a"
-                    inverted
-                    style={{ marginLeft: "0.5em" }}
+                    style={{
+                      background: "#f2b653",
+                      marginLeft: "0.5em",
+                      color: "black"
+                    }}
                     onClick={() => this.props.toggleRoles(true)}
                   >
                     Sign Up

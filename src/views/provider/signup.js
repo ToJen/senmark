@@ -66,6 +66,7 @@ export default function ProviderSignup({ history }) {
                     fluid
                     label="Name"
                     placeholder="Name"
+                    value="Joe Clark"
                     onChange={(e, { value }) => {
                       updateFormState({ ...formState, name: value });
                     }}
@@ -74,6 +75,7 @@ export default function ProviderSignup({ history }) {
                     fluid
                     label="Email"
                     placeholder="Email"
+                    value="joe.clark@gmail.com"
                     onChange={(e, { value }) => {
                       updateFormState({ ...formState, email: value });
                     }}
@@ -81,6 +83,7 @@ export default function ProviderSignup({ history }) {
                   <Form.Input
                     fluid
                     label="Phone"
+                    value="416-321-1234"
                     placeholder="Phone"
                     onChange={(e, { value }) => {
                       updateFormState({ ...formState, phone: value });
@@ -121,6 +124,7 @@ export default function ProviderSignup({ history }) {
               <Form.Input
                 fluid
                 label="Location"
+                value="307 Lake Shore"
                 placeholder="Location"
                 onChange={(e, { value }) => {
                   updateFormState({ ...formState, location: value });
@@ -128,6 +132,7 @@ export default function ProviderSignup({ history }) {
               />
               <Form.Input
                 fluid
+                value="$25"
                 label="Hourly Rate"
                 placeholder="Hourly Rate"
                 onChange={(e, { value }) => {

@@ -9,7 +9,7 @@ const ViewAppointmentRequests = () => {
   } = useContext(DataContext);
   const [isModalOpen, toggleModal] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState({});
-  console.log(appointmentRequests);
+  console.log({appointmentRequests, selectedAppointment});
 
   useEffect(() => {
     console.log(appointmentRequests);
@@ -43,6 +43,7 @@ const ViewAppointmentRequests = () => {
                             <Button
                               onClick={() => {
                                 setSelectedAppointment(appointment);
+                                console.log({appointment})
                                 toggleModal(!isModalOpen);
                               }}
                             >

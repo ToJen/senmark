@@ -88,7 +88,7 @@ const DataProvider = props => {
         appointmentRequest
       ])
     );
-    // localStorageUpdated();
+    localStorageUpdated();
   };
 
   const removeAppointmentRequest = appointmentRequestId => {
@@ -96,7 +96,7 @@ const DataProvider = props => {
     stateData.splice(appointmentRequestId, 1);
     console.log(stateData);
     localStorage.setItem("appointmentRequests", JSON.stringify(stateData));
-    // localStorageUpdated();
+    localStorageUpdated();
   };
 
   const localStorageUpdated = () => {

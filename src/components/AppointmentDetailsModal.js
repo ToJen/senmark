@@ -3,6 +3,7 @@ import { Button, Icon, Card, Image, Modal, Segment } from "semantic-ui-react";
 import faker from "faker";
 
 const AppointmentDetailsModal = ({ visible, appointment, toggleModal }) => {
+  console.log(appointment)
   return (
     <Modal open={visible}>
       <Modal.Content>

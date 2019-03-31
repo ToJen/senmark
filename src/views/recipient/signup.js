@@ -43,21 +43,24 @@ export default function RecipientSignup({history}) {
                     fluid
                     label="Your name"
                     placeholder="Your Name"
+                    value="Steve Ford"
                     onChange={(e, {value}) =>{
                       updateFormState({...formState,  name: value }
                       )}}
                   />
                   <Form.Input
                     fluid
+                    value="416-123-1234"
                     label="Your phone number"
                     placeholder="Phone"
                     onChange={(e, {value}) =>{
-                      updateFormState({...formState,  phone: value }
+                      updateFormState({...formState,  relationPhone: value }
                       )}}
                   />
                   <Form.Input
                     fluid
                     label="Relationship to them"
+                    value="Family"
                     placeholder="e.g Spouse, Family Doctor, etc."
                     onChange={(e, {value}) =>{
                       updateFormState({...formState,  relationship: value }
@@ -68,6 +71,7 @@ export default function RecipientSignup({history}) {
               <Form.Input
                 fluid
                 label="Name"
+                value="John Ford"
                 placeholder="Name"
                 onChange={(e, {value}) =>{
                   updateFormState({...formState,  relationName: value }
@@ -76,6 +80,7 @@ export default function RecipientSignup({history}) {
               <Form.Input
                 fluid
                 label="Age"
+                value="70"
                 placeholder="Age"
                 onChange={(e, {value}) =>{
                   updateFormState({...formState,  age: value }
@@ -85,14 +90,16 @@ export default function RecipientSignup({history}) {
                 fluid
                 label="Phone"
                 placeholder="Phone"
+                value="123-213-3123"
                 onChange={(e, {value}) =>{
-                  updateFormState({...formState,  relationPhone: value }
+                  updateFormState({...formState,  phone: value }
                   )}}
               />
               <Form.Input
                 fluid
                 label="Address"
                 placeholder="Address"
+                value="307 LakeShore"
                 onChange={(e, {value}) =>{
                   updateFormState({...formState,  address: value }
                   )}}

@@ -28,9 +28,9 @@ export default function ViewAppointment() {
           }) :[]}
           onSelectEvent={event => {
             console.log(event);
-            const { appointmentId } = event;
+            const { id } = event;
             const _selectedAppointment = appointments.find(
-              i => i._id === appointmentId
+              i => i._id.toString() === id.toString()
             );
             console.log(_selectedAppointment);
             toggleAppointmentModal(!isAppointmentModalOpen);
