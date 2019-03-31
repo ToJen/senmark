@@ -10,11 +10,14 @@ import {
 } from "semantic-ui-react";
 import ProviderProfile from "../provider/profile";
 import { DataContext } from "../../contexts/DataContext";
+import faker from "faker";
 
 const AppointmentRequestModal = ({ provider }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [formState, updateFormState] = useState({});
-  const { addAppointmentToLocalStorage } = useContext(DataContext);
+  const { addAppointmentRequestToLocalStorage, state: {appointmentRequests} } = useContext(
+    DataContext
+  );
   //   unstackable step.group
   return (
     <Container>
@@ -126,7 +129,13 @@ const AppointmentRequestModal = ({ provider }) => {
           <Button
             onClick={() => {
               setActiveStep(3);
-              addAppointmentToLocalStorage({ formState, provider });
+              addAppointmentRequestToLocalStorage({
+                _id: appointmentRequests.length.toString(),
+                provider: provider.name,
+                recipient: `${faker.name.firstName()} ${faker.name.lastName()}`,
+                price: provider.price,
+                location: "307 Lake Shore Blvd E, Toronto, ON M5A 1C1"
+              });
             }}
           >
             Confirm

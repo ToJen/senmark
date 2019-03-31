@@ -11,8 +11,8 @@ const ProviderHome = () => {
   return (
     <Grid columns={2} stackable>
       <Grid.Column>
-        <Link to="/provider/view-appointment-requests">
-          <Button primary>View Appointment Requests</Button>
+        <Link to="/provider/view-requests">
+          <Button primary>View Requests</Button>
         </Link>
         <Link to="/provider/view-appointments">
           <Button secondary>View Appointments</Button>
