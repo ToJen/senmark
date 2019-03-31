@@ -6,6 +6,13 @@ const genderOptions = [
   { key: "f", text: "Female", value: "female" }
 ];
 
+const languageOptions = [
+  { key: "en", text: "English", value: "english" },
+  { key: "fr", text: "French", value: "french" },
+  { key: "es", text: "Spanish", value: "spanish" },
+  { key: "pt", text: "Portugese", value: "portugese" }
+];
+
 const BASIC_INFO = "BASIC_INFO";
 const steps = {
   [BASIC_INFO]: { name: "Basic Info", completed: false, active: true }
@@ -68,10 +75,10 @@ export default function RecipientSignup({history}) {
               />
               <Form.Input
                 fluid
-                label="Email"
-                placeholder="Email"
+                label="Age"
+                placeholder="Age"
                 onChange={(e, {value}) =>{
-                  updateFormState({...formState,  email: value }
+                  updateFormState({...formState,  age: value }
                   )}}
               />
               <Form.Input
@@ -84,10 +91,10 @@ export default function RecipientSignup({history}) {
               />
               <Form.Input
                 fluid
-                label="Location"
-                placeholder="Location"
+                label="Address"
+                placeholder="Address"
                 onChange={(e, {value}) =>{
-                  updateFormState({...formState,  location: value }
+                  updateFormState({...formState,  address: value }
                   )}}
               />
               <Form.Select
@@ -98,6 +105,15 @@ export default function RecipientSignup({history}) {
                   updateFormState({...formState,  gender: value }
                   )}}
                 placeholder="Gender"
+              />
+              <Form.Select
+                fluid
+                label="Languages Spoken"
+                options={languageOptions}
+                onChange={(e, {value}) =>{
+                  updateFormState({...formState,  languageOptions: value }
+                  )}}
+                placeholder=""
               />
             </Form.Group>
             <Form.Button
