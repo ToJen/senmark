@@ -22,6 +22,8 @@ const stubAppointments = [
     provider: `${faker.name.firstName()} ${faker.name.lastName()}`,
     price: faker.finance.amount(0, 100, 2, "$"),
     location: "307 Lake Shore Blvd E, Toronto, ON M5A 1C1",
+    date: new Date().setDate(new Date().getDate()),
+    time: new Date().getTime(),
     services: ["bathing", "dressing", "toileting"]
   },
   {
@@ -29,6 +31,8 @@ const stubAppointments = [
     recipient: `${faker.name.firstName()} ${faker.name.lastName()}`,
     provider: `${faker.name.firstName()} ${faker.name.lastName()}`,
     price: faker.finance.amount(0, 100, 2, "$"),
+    date: new Date().setDate(new Date().getDate()-1),
+    time: new Date().getTime(),
     location: "307 Lake Shore Blvd E, Toronto, ON M5A 1C1",
     services: ["hair care", "skin care", "toileting"]
   },
@@ -37,6 +41,8 @@ const stubAppointments = [
     recipient: `${faker.name.firstName()} ${faker.name.lastName()}`,
     provider: `${faker.name.firstName()} ${faker.name.lastName()}`,
     price: faker.finance.amount(0, 100, 2, "$"),
+    date: new Date().setDate(new Date().getDate()+1),
+    time: new Date().getTime(),
     location: "307 Lake Shore Blvd E, Toronto, ON M5A 1C1",
     services: ["dressing", "light homekeeping", "socialization"]
   }
@@ -62,22 +68,15 @@ const fetchAppointmentRequestsFromLocalStorage = () => {
     : stubAppointmentRequests;
 };
 
+const fetchAppointmentFromLocalStorage = () => {
+  return localStorage.getItem("appointments")
+    ? JSON.parse(localStorage.getItem("appointments"))
+    : stubAppointments;
+};
+
 const DataProvider = props => {
   const [state, setState] = useState({
-    dates: [
-      {
-        title: "Hacking Health",
-        due: new Date().setDate(new Date().getDate() - 1),
-        appointmentId: "0"
-      },
-      {
-        title: "Hacking Health",
-        due: new Date().setDate(new Date().getDate() + 1),
-        appointmentId: "1"
-      },
-      { title: "Hacking Health", due: new Date(), appointmentId: "2" }
-    ],
-    appointments: stubAppointments,
+    appointments: fetchAppointmentFromLocalStorage(),
     appointmentRequests: fetchAppointmentRequestsFromLocalStorage()
   });
 
@@ -89,37 +88,34 @@ const DataProvider = props => {
         appointmentRequest
       ])
     );
-    localStorageUpdated()
+    // localStorageUpdated();
   };
 
   const removeAppointmentRequest = appointmentRequestId => {
-    const stateData = [
-      ...fetchAppointmentRequestsFromLocalStorage()
-    ];
+    const stateData = [...fetchAppointmentRequestsFromLocalStorage()];
     stateData.splice(appointmentRequestId, 1);
-    console.log(stateData)
-    localStorage.setItem(
-      "appointmentRequests",
-      JSON.stringify(stateData)
-    );
-    localStorageUpdated()
+    console.log(stateData);
+    localStorage.setItem("appointmentRequests", JSON.stringify(stateData));
+    // localStorageUpdated();
   };
 
   const localStorageUpdated = () => {
     const localAppointmentRequests = fetchAppointmentRequestsFromLocalStorage();
-    console.log(localAppointmentRequests);
+    const localAppointments = fetchAppointmentFromLocalStorage();
+    console.log({ localAppointmentRequests, localAppointments });
     setState({ appointmentRequests: localAppointmentRequests });
+    setState({ appointments: localAppointments });
   };
 
   const appendAppointment = appointmentRequestId => {
-    const newAppointment = fetchAppointmentRequestsFromLocalStorage().find(appointment => {
-      return Number(appointment._id) === Number(appointmentRequestId)
-    });
-    removeAppointmentRequest(appointmentRequestId)
-    setState({appointments: {
+    const newAppointment = [
       ...state.appointments,
-      newAppointment
-    }});
+      fetchAppointmentRequestsFromLocalStorage().find(appointment => {
+        return Number(appointment._id) === Number(appointmentRequestId);
+      })
+    ];
+    localStorage.setItem("appointments", JSON.stringify(newAppointment));
+    removeAppointmentRequest(appointmentRequestId);
   };
 
   useEffect(() => {

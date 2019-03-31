@@ -34,7 +34,7 @@ const ConfirmRequestModal = ({ appointment, toggleModal, visible }) => {
                     {appointment.recipient} wants to meet with you
                     <br />
                     <br />
-                    When: {appointment.date}
+                    When: {appointment.date} at {appointment.time}
                     <br />
                     <br />
                     Location: {appointment.location}

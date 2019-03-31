@@ -181,7 +181,8 @@ const AppointmentRequestModal = ({
                       price: provider.price,
                       location: "307 Lake Shore Blvd E, Toronto, ON M5A 1C1",
                       services,
-                      date: `${formState.date} at ${formState.time}`
+                      date: formState.date,
+                      time: formState.time
                     };
                     console.log(request);
                     setActiveStep(3);
