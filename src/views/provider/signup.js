@@ -96,26 +96,6 @@ export default function ProviderSignup({ history }) {
                     placeholder="Gender"
                   />
                 </Form.Group>
-                <Form.Select
-                  fluid
-                  label="Languages Spoken"
-                  options={languageOptions}
-                  onChange={(e, {value}) =>{
-                    updateFormState({...formState,  languageOptions: value }
-                    )}}
-                  placeholder=""
-                  multiple
-                />
-                <Form.Select
-                  fluid
-                  label="Tasks"
-                  options={taskOptions}
-                  onChange={(e, {value}) =>{
-                    updateFormState({...formState,  tasks: value }
-                    )}}
-                  placeholder=""
-                  multiple
-                />
                 <Form.Button
                   onClick={() => {
                     setLoading(true);
@@ -178,37 +158,25 @@ export default function ProviderSignup({ history }) {
       case SKILLS:
         return (
           <Form>
-            <Form.Input
+            <Form.Select
               fluid
-              label="Qualifications"
-              placeholder="Qualifications"
+              label="Languages Spoken"
+              options={languageOptions}
               onChange={(e, { value }) => {
-                updateFormState({ ...formState, qualification: value });
+                updateFormState({ ...formState, languageOptions: value });
               }}
+              placeholder=""
+              multiple
             />
-            <Form.Checkbox
+            <Form.Select
+              fluid
+              label="Tasks"
+              options={taskOptions}
               onChange={(e, { value }) => {
-                updateFormState({ ...formState, skill1: value });
+                updateFormState({ ...formState, tasks: value });
               }}
-              label="Skill 1"
-            />
-            <Form.Checkbox
-              onChange={(e, { value }) => {
-                updateFormState({ ...formState, skill2: value });
-              }}
-              label="Skill 2"
-            />
-            <Form.Checkbox
-              onChange={(e, { value }) => {
-                updateFormState({ ...formState, skill3: value });
-              }}
-              label="Skill 3"
-            />
-            <Form.Checkbox
-              onChange={(e, { value }) => {
-                updateFormState({ ...formState, skil4: value });
-              }}
-              label="Skill 4"
+              placeholder=""
+              multiple
             />
             <Form.TextArea
               //   label="About"
