@@ -18,6 +18,8 @@ import ViewRecipientAppointments from "./recipient/ViewAppointments";
 import ProviderHome from "./provider";
 import ProviderSignup from "./provider/signup";
 import ProviderProfile from "./provider/profile";
+import ViewAppointmentRequests from './provider/ViewAppointmentRequests';
+import ViewProviderAppointments from './provider/ViewAppointments'
 
 class App extends Component {
   constructor(props) {
@@ -86,6 +88,16 @@ class App extends Component {
               exact
               path="/provider/profile"
               render={routeProps => <ProviderProfile {...routeProps} />}
+            />
+            <Route
+              exact
+              path="/provider/view-requests"
+              render={routeProps => <ViewAppointmentRequests {...routeProps} />}
+            />
+            <Route
+              exact
+              path="/provider/view-appointments"
+              render={routeProps => <ViewProviderAppointments {...routeProps} />}
             />
             {/* <Redirect to="/" /> */}
           </Switch>

@@ -11,6 +11,7 @@ export default function Calendar({dates, onSelectEvent}) {
   if (dates) {
     const events = dates
             .map((item, index) => ({
+              appointmentId: item.appointmentId,
               id: index,
               title: `${item.title}`,
               allDay: true,

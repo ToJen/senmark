@@ -1,7 +1,6 @@
 import _ from "lodash";
 import faker from "faker";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { Button, Search, Grid, Image, List, Rating } from "semantic-ui-react";
 import AppointmentRequestModal from "./AppointmentRequestModal";
 
