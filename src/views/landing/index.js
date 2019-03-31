@@ -1,10 +1,8 @@
 import React, { Component, useState } from "react";
 
 import {
-  Grid,
   Button,
   Icon,
-  Card,
   Image,
   Container,
   Header,
@@ -12,53 +10,9 @@ import {
   Responsive,
   Segment,
   Sidebar,
-  Visibility
+  Visibility,
 } from "semantic-ui-react";
-import { Link } from "react-router-dom";
-function renderRoles() {
-  return (
-    <Container fluid style={{ marginTop: "1rem" }}>
-      <Grid columns={2}>
-        <Grid.Row>
-          <Grid.Column>
-            <Card>
-              <Image src="https://react.semantic-ui.com/images/avatar/large/matthew.png" />
-              <Card.Content>
-                <Card.Header textAlign={"center"}>
-                  <Link to={"/provider/signup"}>
-                    <Button animated>
-                      <Button.Content visible>Provider</Button.Content>
-                      <Button.Content hidden>
-                        <Icon name="arrow right" />
-                      </Button.Content>
-                    </Button>
-                  </Link>
-                </Card.Header>
-              </Card.Content>
-            </Card>
-          </Grid.Column>
-          <Grid.Column>
-            <Card>
-              <Image src="https://react.semantic-ui.com/images/avatar/large/matthew.png" />
-              <Card.Content>
-                <Card.Header textAlign={"center"}>
-                  <Link to={"/recipient/signup"}>
-                    <Button animated>
-                      <Button.Content visible>Recipient</Button.Content>
-                      <Button.Content hidden>
-                        <Icon name="arrow right" />
-                      </Button.Content>
-                    </Button>
-                  </Link>
-                </Card.Header>
-              </Card.Content>
-            </Card>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </Container>
-  );
-}
+import { Redirect } from "react-router-dom";
 
 const getWidth = () => {
   const isSSR = typeof window === "undefined";
@@ -67,18 +21,19 @@ const getWidth = () => {
 };
 
 const Heading = ({ mobile, toggleRoles }) => (
-  <Container text>
-    <Header
+  <Container text style={{height:'100%'}}>
+    {/* <Header
       as="h1"
-      content="Welcome to Senmark"
+      content="Welcome to"
+      inverted
       style={{
         fontSize: mobile ? "2em" : "4em",
         fontWeight: "normal",
         marginBottom: 0,
         marginTop: mobile ? "1.5em" : "3em",
-        color: "#1678c2"
       }}
-    />
+    /> */}
+        <Image src="logo.png" />
     <Header
       as="h2"
       content="Get whatever help you want when you want."
@@ -172,6 +127,7 @@ class MobileContainer extends Component {
         as={Sidebar.Pushable}
         getWidth={getWidth}
         maxWidth={Responsive.onlyMobile.maxWidth}
+        style={{display:"grid"}}
       >
         <Sidebar
           as={Menu}
@@ -238,7 +194,7 @@ export default function Landing() {
   const [showRoles, toggleRoles] = useState(false);
   return (
     <ResponsiveContainer toggleRoles={toggleRoles}>
-      {showRoles && renderRoles()}
+      {showRoles && <Redirect to={"/roles"}/>}
     </ResponsiveContainer>
   );
 }
