@@ -2,7 +2,6 @@ import React, { createContext, useState, useEffect } from "react";
 import faker from "faker";
 import _ from "lodash";
 
-
 const tasks = [
   { key: "bt", text: "Bathing", value: "Bathing" },
   { key: "dr", text: "Dressing", value: "Dressing" },
@@ -18,7 +17,7 @@ const tasks = [
 
 const stubAppointments = [
   {
-    _id:0,
+    _id: 0,
     recipient: `${faker.name.firstName()} ${faker.name.lastName()}`,
     provider: `${faker.name.firstName()} ${faker.name.lastName()}`,
     price: faker.finance.amount(0, 100, 2, "$"),
@@ -52,8 +51,8 @@ const stubAppointmentRequests = _.times(10, index => ({
   services: _.times(
     Number(faker.random.number({ min: 1, max: tasks.length })),
     i => tasks[i].text
-  ),
-}))
+  )
+}));
 
 const DataContext = createContext();
 
@@ -81,14 +80,29 @@ const DataProvider = props => {
     appointments: stubAppointments,
     appointmentRequests: fetchAppointmentRequestsFromLocalStorage()
   });
-  
-
 
   const addAppointmentRequestToLocalStorage = appointmentRequest => {
     localStorage.setItem(
       "appointmentRequests",
-      JSON.stringify([...fetchAppointmentRequestsFromLocalStorage(), appointmentRequest])
+      JSON.stringify([
+        ...fetchAppointmentRequestsFromLocalStorage(),
+        appointmentRequest
+      ])
     );
+    localStorageUpdated()
+  };
+
+  const removeAppointmentRequest = appointmentRequestId => {
+    const stateData = [
+      ...fetchAppointmentRequestsFromLocalStorage()
+    ];
+    stateData.splice(appointmentRequestId, 1);
+    console.log(stateData)
+    localStorage.setItem(
+      "appointmentRequests",
+      JSON.stringify(stateData)
+    );
+    localStorageUpdated()
   };
 
   const localStorageUpdated = () => {
@@ -97,15 +111,33 @@ const DataProvider = props => {
     setState({ appointmentRequests: localAppointmentRequests });
   };
 
+  const appendAppointment = appointmentRequestId => {
+    const newAppointment = fetchAppointmentRequestsFromLocalStorage().find(appointment => {
+      return Number(appointment._id) === Number(appointmentRequestId)
+    });
+    removeAppointmentRequest(appointmentRequestId)
+    setState({appointments: {
+      ...state.appointments,
+      newAppointment
+    }});
+  };
+
   useEffect(() => {
     if (typeof window !== "undefined") {
+      // localStorageUpdated()
       window.addEventListener("storage", localStorageUpdated);
     }
   }, []);
 
   return (
     <DataContext.Provider
-      value={{ state, setState, addAppointmentRequestToLocalStorage }}
+      value={{
+        state,
+        setState,
+        addAppointmentRequestToLocalStorage,
+        removeAppointmentRequest,
+        appendAppointment
+      }}
     >
       {props.children}
     </DataContext.Provider>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Button,
   Card,
@@ -8,9 +8,13 @@ import {
   Grid,
   List
 } from "semantic-ui-react";
+import { DataContext } from "../../contexts/DataContext";
 
 const ConfirmRequestModal = ({ appointment, toggleModal, visible }) => {
   console.log(appointment);
+
+  const { removeAppointmentRequest, appendAppointment } = useContext(DataContext);
+
   return (
     <Modal open={visible}>
       <Modal.Content>
@@ -43,7 +47,7 @@ const ConfirmRequestModal = ({ appointment, toggleModal, visible }) => {
                     <br />
                     <br />
                     <List>
-                      {appointment.services.map((service, i) => {
+                      {appointment && appointment.services && appointment.services.map((service, i) => {
                         return <List.Item key={i}>{service}</List.Item>;
                       })}
                     </List>
@@ -53,10 +57,21 @@ const ConfirmRequestModal = ({ appointment, toggleModal, visible }) => {
             </Card.Content>
             <Card.Content extra>
               <div className="ui two buttons">
-                <Button basic color="green">
+                <Button basic color="green" onClick={() => {
+                  appendAppointment(appointment._id);
+                  toggleModal();
+                  window.location.href = "/provider/view-appointments";
+                }}>
                   Accept
                 </Button>
-                <Button basic color="red">
+                <Button
+                  basic
+                  color="red"
+                  onClick={() => {
+                    removeAppointmentRequest(appointment._id);
+                    toggleModal();
+                  }}
+                >
                   Decline
                 </Button>
               </div>

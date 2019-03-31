@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Button, List, Loader, Grid, Header } from "semantic-ui-react";
 import { DataContext } from "../../contexts/DataContext";
 import ConfirmRequestModal from "./ConfirmRequestModal";
@@ -10,6 +10,10 @@ const ViewAppointmentRequests = () => {
   const [isModalOpen, toggleModal] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState({});
   console.log(appointmentRequests);
+
+  useEffect(() => {
+    console.log(appointmentRequests);
+  }, [appointmentRequests]);
 
   if (appointmentRequests)
     return (
