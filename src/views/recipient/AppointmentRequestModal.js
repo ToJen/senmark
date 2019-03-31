@@ -8,7 +8,10 @@ import {
   Button,
   TextArea,
   Modal,
-  Grid
+  Grid,
+  Dimmer,
+  Loader,
+  Segment
 } from "semantic-ui-react";
 import ProviderProfile from "../provider/profile";
 import { DataContext } from "../../contexts/DataContext";
@@ -21,6 +24,7 @@ const AppointmentRequestModal = ({
 }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [formState, updateFormState] = useState({});
+  const [loading, setLoading] = useState(false);
   const {
     addAppointmentRequestToLocalStorage,
     state: { appointmentRequests }
@@ -106,94 +110,103 @@ const AppointmentRequestModal = ({
 
   const renderPaymentStep = () => {
     return (
-      <Container fluid>
-        <div className="payment-step" hidden={activeStep !== 2}>
-          <Grid centered>
-            <Grid.Row centered>
-              <Form>
-                <Form.Input
-                  label="Card Number"
-                  onChange={(e, { value }) => {
-                    updateFormState({ ...formState, cardNo: value });
-                  }}
-                />
-                <Grid>
-                  <Grid.Row columns={3} label="Expiration Date">
-                    <Grid.Column>
-                      <label>MM</label>
-                      <Form.Input
-                        type="number"
-                        min={1}
-                        max={12}
-                        palceholder="MM"
-                        onChange={(e, { value }) => {
-                          updateFormState({ ...formState, month: value });
-                        }}
-                      />
-                    </Grid.Column>
+      <div className="payment-step" hidden={activeStep !== 2}>
+      <Dimmer.Dimmable as={Segment} dimmed={loading}>
+        <Dimmer active={loading} inverted>
+          <Loader content="Processing payment..." />
+        </Dimmer>
+        <Container fluid>
+            <Grid centered>
+              <Grid.Row centered>
+                <Form>
+                  <Form.Input
+                    label="Card Number"
+                    onChange={(e, { value }) => {
+                      updateFormState({ ...formState, cardNo: value });
+                    }}
+                  />
+                  <Grid>
+                    <Grid.Row columns={3} label="Expiration Date">
+                      <Grid.Column>
+                        <label>MM</label>
+                        <Form.Input
+                          type="number"
+                          min={1}
+                          max={12}
+                          palceholder="MM"
+                          onChange={(e, { value }) => {
+                            updateFormState({ ...formState, month: value });
+                          }}
+                        />
+                      </Grid.Column>
 
-                    <Grid.Column>
-                      <label>YYYY</label>
-                      <Form.Input
-                        type="number"
-                        min={2019}
-                        palceholder="YYYY"
-                        onChange={(e, { value }) => {
-                          updateFormState({ ...formState, year: value });
-                        }}
-                      />
-                    </Grid.Column>
+                      <Grid.Column>
+                        <label>YYYY</label>
+                        <Form.Input
+                          type="number"
+                          min={2019}
+                          palceholder="YYYY"
+                          onChange={(e, { value }) => {
+                            updateFormState({ ...formState, year: value });
+                          }}
+                        />
+                      </Grid.Column>
 
-                    <Grid.Column>
-                      <label>CVV</label>
-                      <Form.Input
-                        type="number"
-                        min={0}
-                        max={999}
-                        palceholder="CVV"
-                        onChange={(e, { value }) => {
-                          updateFormState({ ...formState, cvv: value });
-                        }}
-                      />
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              </Form>
-            </Grid.Row>
+                      <Grid.Column>
+                        <label>CVV</label>
+                        <Form.Input
+                          type="number"
+                          min={0}
+                          max={999}
+                          palceholder="CVV"
+                          onChange={(e, { value }) => {
+                            updateFormState({ ...formState, cvv: value });
+                          }}
+                        />
+                      </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
+                </Form>
+              </Grid.Row>
 
-            <Grid.Row centered>
-              <Button.Group>
-                <Button
-                  labelPosition="left"
-                  icon="left chevron"
-                  content="Back"
-                  onClick={() => setActiveStep(1)}
-                />
-                <Button
-                  labelPosition="right"
-                  icon="right chevron"
-                  content="Next"
-                  onClick={() => {
-                    const request = {
-                      _id: appointmentRequests.length,
-                      provider: provider.name,
-                      recipient: `John Ford`,
-                      price: provider.price,
-                      location: "307 Lake Shore Blvd E, Toronto, ON M5A 1C1",
-                      services,
-                      date: formState.date,
-                      time: formState.time
-                    };
-                    console.log(request);
-                    setActiveStep(3);
-                    addAppointmentRequestToLocalStorage(request);
-                  }}
-                />
-              </Button.Group>
-            </Grid.Row>
-          </Grid>
-        </div>
-      </Container>
+              <Grid.Row centered>
+                <Button.Group>
+                  <Button
+                    labelPosition="left"
+                    icon="left chevron"
+                    content="Back"
+                    onClick={() => setActiveStep(1)}
+                  />
+                  <Form.Button
+                    labelPosition="right"
+                    icon="right chevron"
+                    content="Next"
+                    onClick={() => {
+                      const request = {
+                        _id: appointmentRequests.length,
+                        provider: provider.name,
+                        recipient: `John Ford`,
+                        price: provider.price,
+                        location: "307 Lake Shore Blvd E, Toronto, ON M5A 1C1",
+                        services,
+                        date: formState.date,
+                        time: formState.time
+                      };
+                      console.log(request);
+                      setLoading(true);
+                      setTimeout(() => {
+                        setLoading(false);
+                        setActiveStep(3);
+                        addAppointmentRequestToLocalStorage(request);
+                      }, 1e3);
+                    }}
+                  />
+                </Button.Group>
+              </Grid.Row>
+            </Grid>
+        </Container>
+      </Dimmer.Dimmable>
+          </div>
     );
   };
 
