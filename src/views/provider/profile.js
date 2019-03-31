@@ -21,10 +21,17 @@ const ProviderProfile = ({ data }) => {
               />
               <Segment>{data.price}</Segment>
               <Segment>About {data.distance}km from you</Segment>
+              <Segment>Gender {data.gender}</Segment>
               <Segment>
                 Services
                 {data.services.map((service, i) => {
                   return <Segment.Group children={service} key={i} />;
+                })}
+              </Segment>
+              <Segment>
+                Languages Spoken
+                {data.languages.map((language, i) => {
+                  return <Segment.Group children={language} key={i} />;
                 })}
               </Segment>
             </Segment>

@@ -4,6 +4,28 @@ import React, { useState } from "react";
 import { Button, Search, Grid, Image, List, Rating } from "semantic-ui-react";
 import AppointmentRequestModal from "./AppointmentRequestModal";
 
+const languageOptions = [
+  { key: "en", text: "English", value: "english" },
+  { key: "fr", text: "French", value: "french" },
+  { key: "es", text: "Spanish", value: "spanish" },
+  { key: "pt", text: "Portugese", value: "portugese" }
+];
+const tasks = [
+  { key: "bt", text: "Bathing", value: "bathing" },
+  { key: "dr", text: "Dressing", value: "dressing" },
+  { key: "lh", text: "Light Homekeeping", value: "lightHomekeeping" },
+  { key: "so", text: "Socialization", value: "socialization" },
+  { key: "hc", text: "Haircare", value: "haircare" },
+  { key: "sc", text: "Skincare", value: "skincare" },
+  { key: "tl", text: "Toileting", value: "toileting" },
+  { key: "lf", text: "Lifts", value: "lifts" },
+  { key: "tr", text: "Transfers", value: "transfers" },
+  { key: "ot", text: "Other", value: "other" }
+];
+const genderOptions = [
+  { key: "m", text: "Male", value: "male" },
+  { key: "f", text: "Female", value: "female" }
+];
 const source = _.times(10, () => ({
   title: faker.name.title(),
   name: `${faker.name.firstName()} ${faker.name.lastName()}`,
@@ -11,12 +33,17 @@ const source = _.times(10, () => ({
   avatar: faker.internet.avatar(),
   price: faker.finance.amount(0, 100, 2, "$"),
   distance: Number(faker.random.number()) % 6,
-  services: _.times(Number(faker.random.number({min: 1, max: 12})), () =>
-    faker.commerce.productAdjective()
+  services: _.times(
+    Number(faker.random.number({ min: 1, max: tasks.length })),
+    i => tasks[i].text
   ),
-  gender: faker.name.gender
+  languages: _.times(
+    Number(faker.random.number({ min: 1, max: languageOptions.length })),
+    i => languageOptions[i].text
+  ),
+  gender: genderOptions[Number(faker.random.number({ min: 0, max: 1 }))].text
 }));
-
+console.log({ source });
 const ProvidersList = ({ providers }) => {
   const [isRequestModalOpen, toggleRequestModal] = useState(false);
   const [selectedProvider, setSelectedProvider] = useState({});
@@ -43,7 +70,8 @@ const ProvidersList = ({ providers }) => {
                       maxRating={5}
                       disabled
                     />
-                    {provider.services.length} {provider.services.length === 1 ? 'skill' : 'skills'}
+                    {provider.services.length}{" "}
+                    {provider.services.length === 1 ? "skill" : "skills"}
                   </>
                 </List.Header>
                 <List.Description>
