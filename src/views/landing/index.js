@@ -10,7 +10,7 @@ import {
   Responsive,
   Segment,
   Sidebar,
-  Visibility,
+  Visibility
 } from "semantic-ui-react";
 import { Redirect } from "react-router-dom";
 
@@ -21,7 +21,7 @@ const getWidth = () => {
 };
 
 const Heading = ({ mobile, toggleRoles }) => (
-  <Container text style={{height:'100%'}}>
+  <Container text style={{ height: "100%" }}>
     {/* <Header
       as="h1"
       content="Welcome to"
@@ -33,17 +33,24 @@ const Heading = ({ mobile, toggleRoles }) => (
         marginTop: mobile ? "1.5em" : "3em",
       }}
     /> */}
-        <Image src="logo.png" />
+    <Image src="logo.png" />
     <Header
       as="h2"
-      content="Get whatever help you want when you want."
+      content="Transforming Homecare"
       style={{
         fontSize: mobile ? "1.5em" : "1.7em",
         fontWeight: "normal",
         marginTop: mobile ? "0.5em" : "1.5em"
       }}
     />
-    <Button primary size="huge" onClick={() => toggleRoles(true)}>
+    <Button
+      style={{
+        marginTop: "5rem"
+      }}
+      primary
+      size="huge"
+      onClick={() => toggleRoles(true)}
+    >
       Get Started
       <Icon name="right arrow" />
     </Button>
@@ -125,7 +132,7 @@ class MobileContainer extends Component {
         as={Sidebar.Pushable}
         getWidth={getWidth}
         maxWidth={Responsive.onlyMobile.maxWidth}
-        style={{display:"grid"}}
+        style={{ display: "grid" }}
       >
         <Sidebar
           as={Menu}
@@ -190,7 +197,7 @@ export default function Landing() {
   const [showRoles, toggleRoles] = useState(false);
   return (
     <ResponsiveContainer toggleRoles={toggleRoles}>
-      {showRoles && <Redirect to={"/roles"}/>}
+      {showRoles && <Redirect to={"/roles"} />}
     </ResponsiveContainer>
   );
 }
