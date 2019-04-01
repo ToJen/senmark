@@ -3,7 +3,7 @@ import { Button, Icon, Card, Image, Modal, Segment } from "semantic-ui-react";
 import faker from "faker";
 
 const AppointmentDetailsModal = ({ visible, appointment, toggleModal }) => {
-  console.log(appointment)
+  console.log(appointment);
   return (
     <Modal open={visible}>
       <Modal.Content>
@@ -18,9 +18,17 @@ const AppointmentDetailsModal = ({ visible, appointment, toggleModal }) => {
               <Card.Header>Appointment Details</Card.Header>
               <Card.Meta> {"<2 km away"}</Card.Meta>
               <Card.Description>
-                {appointment && Object.keys(appointment).map((item, i) => {
-                    if(item !== "_id") return <Segment.Group children={`${item}: ${appointment[item]}`} key={i} />;
-                })}
+                {appointment &&
+                  Object.keys(appointment).map((item, i) => {
+                    return (
+                      item !== "_id" && (
+                        <Segment.Group
+                          children={`${item}: ${appointment[item]}`}
+                          key={i}
+                        />
+                      )
+                    );
+                  })}
               </Card.Description>
             </Card.Content>
           </Card>

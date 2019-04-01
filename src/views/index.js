@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect
 } from "react-router-dom";
 import { DataProvider } from "../contexts/DataContext";
 

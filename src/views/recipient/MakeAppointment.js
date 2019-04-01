@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import {
   Button,
   Search,
-  Grid,
   Image,
   List,
   Rating,
@@ -56,8 +55,6 @@ const source = [
       title: faker.name.title(),
       gender,
       name: `${faker.name.firstName(gender)} ${faker.name.lastName(gender)}`,
-      title: faker.name.title(),
-      name: `${faker.name.firstName()} ${faker.name.lastName()}`,
       rating: Number(faker.random.number()) % 5,
       avatar: faker.internet.avatar(),
       price: faker.finance.amount(0, 100, 2, "$"),
